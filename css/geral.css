@@ -159,6 +159,12 @@ body{
     margin-right: 10px;
     background-color: #fb5;
 }
+.btc-preco{
+    background-color: #3F4;
+    padding: .2rem .5rem;
+    font-weight: bold;
+    border-radius: 2px;
+}
 /* CONTATO */
 /* RODAPE */
 .copy{
