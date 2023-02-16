@@ -1,4 +1,4 @@
-import initTabNav from './modules/tabnav.js';
+import TabNav from './modules/tabnav.js';
 import Accordion from './modules/accordion.js';
 import initModal from './modules/modal.js';
 import initTooltip from './modules/tooltip.js';
@@ -12,7 +12,9 @@ import initAnimacaoScroll from './modules/scroll-animacao.js';
 const accordion = new Accordion('[data-anime="accordion"] dt');
 accordion.init();
 
-initTabNav();
+const tabnav = new TabNav('[data-tab="menu"] li', '[data-tab="content"] section');
+tabnav.init();
+
 initModal();
 initTooltip();
 initDropdownMenu();
