@@ -1,22 +1,41 @@
-export default function initFuncionamento() {
-  const funcionamento = document.querySelector('[data-semana]');
-  // pega o valor do data-semana/data-horario e transforma em um array pelo método .split
-  // para transformar em números basta usar o .map e o objeto Number
-  const diasSemana = funcionamento.dataset.semana.split(',').map(Number);
-  const horarioSemana = funcionamento.dataset.horario.split(',').map(Number);
+export default class Funcionamento {
+  constructor(funcionamento, activeClass) {
+    this.funcionamento = document.querySelector(funcionamento);
+    this.activeClass = activeClass;
+  }
 
-  const dataAgora = new Date();
-  const diaAgora = dataAgora.getDay();
-  const horarioAgora = dataAgora.getHours();
+  dadosFuncionamento() {
+    // pega o valor do data-semana/data-horario e transforma em um array pelo método .split
+    // para transformar em números basta usar o .map e o objeto Number
+    this.diasSemana = this.funcionamento.dataset.semana.split(',').map(Number);
+    this.horarioSemana = this.funcionamento.dataset.horario.split(',').map(Number);
+  }
 
-  // verificar se o dia de hoje está dentro do array
-  const semanaAberto = diasSemana.indexOf(diaAgora) !== -1;
-  // verificar se o horario atual está válido
-  const horarioAberto = horarioAgora >= horarioSemana[0] && horarioAgora < horarioSemana[1];
+  dadosAgora() {
+    this.dataAgora = new Date();
+    this.diaAgora = this.dataAgora.getDay();
+    this.horarioAgora = this.dataAgora.getUTCHours() - 3; // horario de brasilia
+  }
 
-  if (semanaAberto && horarioAberto) {
-    funcionamento.classList.add('aberto');
-  } else {
-    funcionamento.classList.remove('aberto');
+  estaAberto() {
+    // verificar se o dia de hoje está dentro do array
+    this.semanaAberto = this.diasSemana.indexOf(this.diaAgora) !== -1;
+    // verificar se o horario atual está válido
+    this.horarioAberto = this.horarioAgora >= this.horarioSemana[0] && this.horarioAgora < this.horarioSemana[1];
+
+    return (this.semanaAberto && this.horarioAberto);
+  }
+
+  ativaAberto() {
+    if (this.estaAberto()) this.funcionamento.classList.add(this.activeClass);
+  }
+
+  init() {
+    if (this.funcionamento) {
+      this.dadosFuncionamento();
+      this.dataAgora();
+      this.ativaAberto();
+    }
+    return this;
   }
 }
