@@ -1,4 +1,4 @@
-export default class initTooltip {
+export default class Tooltip {
   constructor(tooltips) {
     this.tooltips = document.querySelectorAll(tooltips);
 
